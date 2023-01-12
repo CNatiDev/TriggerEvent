@@ -6,69 +6,21 @@ using UnityEngine.UI;
 using TMPro;
 public class OnTriggerEventSystem : MonoBehaviour
 {
+    public string Tag;
     public UnityEvent Event;
-    public UnityEvent ExitEvent;
-    public TextMeshProUGUI text;
-    [SerializeField]
-    private bool InTrigger = false;
-    public bool InGamePlay = false;
-    public PauseMenu Menu;
-    void Update()
-    {
-        if (Input.GetKey(KeyCode.E) && InTrigger == true)
-        {
-
-            Event.Invoke();
-            Menu.enabled = false;
-        }
-        if (InGamePlay)
-        {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
-
-        if (Input.GetKey(KeyCode.T))
-        {
-            InGamePlay = false;
-        }
-        if (InGamePlay == true && Input.GetKey(KeyCode.Escape))
-        {
-            ExitGamePlay();
-            ExitEvent.Invoke();
-        }
-    }
-    public void Quit()
-    {
-        ExitGamePlay();
-        ExitEvent.Invoke();
-    }
+    public UnityEvent QuitTriggerEvent;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == Tag)
         {
-            InTrigger = true;
-            text.enabled = true;
-
+            Event.Invoke();
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        InTrigger = false;
-        text.enabled = false;
+        if (other.gameObject.tag == Tag)
+        {
+            QuitTriggerEvent.Invoke();
+        }
     }
-    public void InGamePlay_SetActive(bool In_Game)
-    {
-        InGamePlay = In_Game;
-    }
-    public void ExitGamePlay()
-    {
-
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        InGamePlay = false;
-        Menu.enabled = true;
-
-    }
-
 }
