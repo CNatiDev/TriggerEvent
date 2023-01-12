@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-public class TrigerEvenW : MonoBehaviour
+public class TriggerEvent : MonoBehaviour
 {
     public string Tag;
     public UnityEvent Event;
